@@ -10,12 +10,11 @@ project('not-a-wm', 'c',
 
 
 headers = [
-    'locale.h',
+    'stdlib.h',
+    'stdio.h',
     'errno.h',
-    'sys/mman.h',
-    'stdbool.h',
-    'sys/stat.h',
-    'fcntl.h',
+    'signal.h',
+    'string.h',
 ]
 c_compiler = meson.get_compiler('c')
 foreach h : headers
@@ -24,9 +23,6 @@ foreach h : headers
     endif
 endforeach
 
-glib_min_major='2'
-glib_min_minor='40'
-glib_min_version='.'.join([glib_min_major, glib_min_minor])
 wayland_min_version='1.12.92'
 weston_supported_majors = [
     '3',

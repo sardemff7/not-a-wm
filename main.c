@@ -25,7 +25,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include <signal.h>
+#include <string.h>
 #include <compositor.h>
 #include <compositor-drm.h>
 #include <compositor-wayland.h>
@@ -235,6 +237,19 @@ main()
     weston_layer_init(&context->surfaces_layer, context->compositor);
     weston_layer_set_position(&context->surfaces_layer, WESTON_LAYER_POSITION_NORMAL);
 
+
+    const char *socket_name;
+    socket_name = wl_display_add_socket_auto(context->display);
+    if ( socket_name == NULL )
+    {
+        weston_log("Couldn’t add socket: %s\n", strerror(errno));
+        return -1;
+    }
+
+    setenv("WAYLAND_DISPLAY", socket_name, 1);
+    unsetenv("DISPLAY");
+
+    weston_compositor_wake(context->compositor);
     wl_display_run(context->display);
 
     weston_desktop_destroy(context->desktop);
