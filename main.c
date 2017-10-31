@@ -137,6 +137,7 @@ _naw_surface_removed(struct weston_desktop_surface *surface, void *user_data)
     if ( self == NULL )
         return;
 
+    weston_desktop_surface_unlink_view(self->view);
     weston_view_destroy(self->view);
     weston_desktop_surface_set_user_data(surface, NULL);
     free(self);
