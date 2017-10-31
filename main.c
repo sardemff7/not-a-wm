@@ -146,6 +146,9 @@ _naw_surface_removed(struct weston_desktop_surface *surface, void *user_data)
 }
 
 static const struct weston_desktop_api _naw_desktop_api = {
+    /* For backward ABI compatibility */
+    .struct_size = sizeof(struct weston_desktop_api),
+
     /* These two are the minimal API allowed */
     .surface_added = _naw_surface_added,
     .surface_removed = _naw_surface_removed,
